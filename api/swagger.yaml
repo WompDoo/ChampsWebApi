@@ -1,0 +1,262 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "League of Legends champion statistics\n",
+    "version": "0.0.1",
+    "title": "League of Legends stats",
+    "contact": {
+      "name": "heigo.kure@khk.ee"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "localhost",
+  "basePath": "/ChampsWebApi",
+  "schemes": [
+    "http",
+    "https"
+  ],
+    "consumes": [
+    "application/json",
+  ],
+  "produces": [
+    "application/json",
+  ],
+  "paths": {
+    "/champions/addChampion/add.php": {
+      "post": {
+        "tags": [
+          "champion"
+        ],
+        "summary": "Add a new champion",
+        "description": "Add a new champion data",
+        "consumes": [
+          "application/x-www-form-urlencoded",
+
+        ],
+
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "type": "string",
+            "description": "champion that needs to be added to the list",
+            "required": true,
+          },
+          {
+            "name": "role",
+            "in": "query",
+            "type": "string",
+            "description": "champion that needs to be added to the list",
+            "required": true,
+          },
+          {
+            "name": "winPercent",
+            "in": "query",
+            "type": "string",
+            "description": "champion that needs to be added to the list",
+            "required": true,
+          },
+        ],
+        "responses": {
+          "200": {
+            "description": "Works"
+          }
+        }
+      }
+    },
+    "/champions/findByRoles/": {
+      "get": {
+        "tags": [
+          "champion"
+        ],
+        "summary": "Finds champions by roles",
+        "description": "Multiple status values can be provided with comma seperated strings",
+        "operationId": "findchampionsByRoles",
+        "parameters": [
+          {
+            "name": "role",
+            "in": "query",
+            "description": "Status values that need to be considered for filter",
+            "required": false,
+            "type": "string",
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+          },
+        }
+      }
+    },
+    "/champions/findAll/": {
+      "get": {
+        "tags": [
+          "champion"
+        ],
+        "summary": "Finds all champions",
+        "description": "Multiple status values can be provided with comma seperated strings",
+        "operationId": "findAllchampions",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+               "schema": {
+              "title": "Champions",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/champion"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/champions/findByWinPercent/": {
+      "get": {
+        "tags": [
+          "champion"
+        ],
+        "summary": "Finds champions by Win%",
+        "description": "champion win percentages",
+        "parameters": [
+          {
+            "name": "winPercent",
+            "in": "query",
+            "description": "Win% to filter by",
+            "required": true,
+            "type": "string",
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+          }
+        }
+      }
+    },
+    "/champions/findById/": {
+      "get": {
+        "tags": [
+          "champion"
+        ],
+        "summary": "Find champion by ID",
+        "description": "Finds a champion by ID",
+        "parameters": [
+          {
+            "name": "champions_id",
+            "in": "query",
+            "description": "ID of champion that needs to be fetched",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+          }
+        }
+      }
+    },
+    "/champions/updateChampion/update.php": {
+      "put": {
+        "tags": [
+          "champion"
+        ],
+        "summary": "Updates a champion in the store with form data",
+        "description": "",
+        "operationId": "updatechampionWithForm",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "type": "integer",
+            "description": "champion that needs to be added to the list",
+            "required": true,
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "type": "string",
+            "description": "champion that needs to be added to the list",
+            "required": true,
+          },
+          {
+            "name": "role",
+            "in": "query",
+            "type": "string",
+            "description": "champion that needs to be added to the list",
+            "required": true,
+          },
+          {
+            "name": "winPercent",
+            "in": "query",
+            "type": "integer",
+            "description": "champion that needs to be added to the list",
+            "required": true,
+          },
+        ],
+        "responses": {
+          "200": {
+            "description": "Works"
+          }
+        },
+      },
+    },
+    "/champions/deleteChampion/": {
+      "delete": {
+        "tags": [
+          "champion"
+        ],
+        "summary": "Deletes a champion",
+        "description": "Deletes a champion by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "champion id to delete",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Works"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "champion": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string",
+          "example": "Ashe"
+        },
+        "role": {
+          "type": "string",
+          "description": "champion role in the list"
+        },
+        "winPercent": {
+          "type": "string",
+          "description": "champion win percent in the list"
+        }
+      }
+    }
+  }
+}
