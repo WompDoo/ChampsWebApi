@@ -36,5 +36,5 @@ try {
 
 
 $json = json_encode($rows, JSON_PRETTY_PRINT);
-printf("<pre>%s</pre>", $json);
+printf("%s", $json);
 ?>

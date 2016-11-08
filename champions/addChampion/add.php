@@ -5,18 +5,20 @@ $password = "";
 $dbname = "webservice_championsdb";
 
 $conn = mysqli_connect($servername, $username, $password, $dbname);
-$name = $_GET["name"];
-$role = $_GET["role"];
-$winPercent = $_GET["winPercent"];
+$json = file_get_contents('php://input');
+$request = json_decode($json);
 
-if (!empty($name && $role && $winPercent)) {
 
-    $sql = "INSERT INTO champions (name, role, winPercent) VALUES('$name', '$role', '$winPercent')";
+if (!empty($request->name && $request->role && $request->winPercent)) {
 
-    mysqli_query($conn, $sql);
+    $sql = "INSERT INTO champions (name, role, winPercent) VALUES('$request->name', '$request->role', '$request->winPercent')";
+
+
+    mysqli_query($conn, $sql) or die(mysqli_error($conn));
+
 
 }
 
 mysqli_close($conn);
 
-echo $sql;
+
